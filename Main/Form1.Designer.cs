@@ -46,7 +46,7 @@
             // btnStart
             // 
             btnStart.Enabled = false;
-            btnStart.Location = new Point(195, 16);
+            btnStart.Location = new Point(276, 12);
             btnStart.Name = "btnStart";
             btnStart.Size = new Size(75, 23);
             btnStart.TabIndex = 0;
