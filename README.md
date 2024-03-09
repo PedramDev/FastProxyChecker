@@ -1,3 +1,3 @@
-Super fast proxy checker
+**Super fast proxy checker**
 
-support: socks5
+Support: socks5
