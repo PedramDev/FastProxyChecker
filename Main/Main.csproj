@@ -11,15 +11,21 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>none</DebugType>
+    <DebugType>portable</DebugType>
+    <Optimize>True</Optimize>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>none</DebugType>
+    <DebugType>portable</DebugType>
+    <Optimize>False</Optimize>
   </PropertyGroup>
 
   <ItemGroup>
     <Content Include="specflowproject.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ruri.SocksSharp" Version="1.6.0" />
   </ItemGroup>
 
 </Project>

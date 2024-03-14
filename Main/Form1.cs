@@ -11,7 +11,7 @@ namespace Main
         private ConcurrentBag<Sock5Model> Socks5List;
         // Define the cancellation token.
         CancellationTokenSource _source;
-        private static int _proxyRemains=0;
+        private static int _proxyRemains = 0;
 
         public Form1()
         {
@@ -26,12 +26,12 @@ namespace Main
 
             var timer_stop_watch = new Stopwatch();
 
-            var checker = new Proxy5();
+            var checker = new ProxyChecker();
 
             var options = new ParallelOptions { MaxDegreeOfParallelism = Environment.ProcessorCount, CancellationToken = cancelToken };
             await Parallel.ForEachAsync(Socks5List, options, async (socks, token) =>
             {
-                await checker.CheckProxy(socks.Host, socks.Port, 10, token).ContinueWith(t =>
+                await checker.CheckProxy(ProxyChecker.ProxyType.Socks4, socks.Host, int.Parse(socks.Port), 10000, token).ContinueWith(t =>
                 {
                     if (t.Result)
                     {
@@ -59,8 +59,8 @@ namespace Main
                 Socks5List = new ConcurrentBag<Sock5Model>(proxies.Select(c =>
                 new Sock5Model
                 {
-                    Host = Regex.Match(c, @"\d+\.\d+\.\d+\.\d+").Value,
-                    Port = Regex.Match(c, @"(?<=:)\d+").Value
+                    Host = IP().Match(c).Value,
+                    Port = Port().Match(c).Value
                 }
                 )
                 .ToList());
@@ -81,6 +81,11 @@ namespace Main
         {
             _source.Cancel();
         }
+
+        [GeneratedRegex(@"(?<=:)\d+")]
+        private static partial Regex Port();
+        [GeneratedRegex(@"\d+\.\d+\.\d+\.\d+")]
+        private static partial Regex IP();
     }
 
     public class Sock5Model
